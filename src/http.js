@@ -2,7 +2,7 @@
  * Created by rviscuso on 11/29/16.
  */
 
-const du = require('./util/docker');
+const util = require('./util');
 
 let url = process.argv[2];
 
@@ -11,5 +11,5 @@ if(!url){
     process.exit(1);
 }
 
-du.httpS(url)
+util.httpS(url)
     .pipe(process.stdout);

@@ -6,3 +6,5 @@ COPY node_modules /app/node_modules
 WORKDIR /app
 
 RUN npm install
+
+ENTRYPOINT ["node"]

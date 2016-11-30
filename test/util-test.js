@@ -2,19 +2,15 @@
  * Created by rviscuso on 11/29/16.
  */
 
-const du = require('../src/util/docker');
+const util = require('../src/util');
 
-describe('docker', function() {
+describe('util', function() {
 
     this.timeout(5000);
 
     it('should ping localhost', (done) => {
 
-        let st = du.pingS('localhost');
-
-        st.on('data', (data) => {
-            //console.log(data.toString());
-        });
+        let st = util.pingS('localhost');
 
         st.on('error', (err) => {
             done(err);
@@ -23,12 +19,11 @@ describe('docker', function() {
         st.on('end', () => {
             done();
         })
-
     });
 
     it('should http request google', (done) => {
 
-        let st = du.httpS('http://google.com');
+        let st = util.httpS('http://google.com');
 
         st.on('response', () => {
             done();
@@ -41,7 +36,7 @@ describe('docker', function() {
 
     it('NEGATIVE should return error for non-exisitng url', (done) => {
 
-        let st = du.httpS('http://abcdefghijk.com');
+        let st = util.httpS('http://abcdefghijk.com');
 
         st.on('response', () => {
             done('Received response but shouldn\'t have')
@@ -54,7 +49,7 @@ describe('docker', function() {
 
     it('NEGATIVE 404', (done) => {
 
-        let st = du.httpS('http://google.com/idontexist');
+        let st = util.httpS('http://google.com/idontexist');
 
         st.on('response', (res) => {
             if (res.statusCode == 404){
@@ -69,5 +64,29 @@ describe('docker', function() {
             done(err);
         })
 
+    });
+
+    it ('should telnet', (done) => {
+
+        util.telnet('www.google.com', 80, (err) => {
+            if(err){
+                done(err);
+            }
+            else {
+                done();
+            }
+        })
+    });
+
+    it ('NEGATIVE should telnet', (done) => {
+
+        util.telnet('http://abcdefghijk.com', 80, (err, data) => {
+            if(err){
+                done();
+            }
+            else {
+                done('Connected but should not have: ' + data);
+            }
+        })
     })
 });

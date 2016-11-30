@@ -2,7 +2,7 @@
  * Created by rviscuso on 11/29/16.
  */
 
-const du = require('./util/docker');
+const util = require('./util');
 
 let hostName = process.argv[2];
 
@@ -11,5 +11,5 @@ if(!hostName){
     process.exit(1);
 }
 
-du.pingS(hostName)
+util.pingS(hostName)
     .pipe(process.stdout);

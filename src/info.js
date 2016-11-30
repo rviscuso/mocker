@@ -2,8 +2,13 @@
  * Created by rviscuso on 11/29/16.
  */
 
-const du = require('./util/docker');
+const util = require('./util');
 
-du.thisContainerInfo((err, out) => {
-    console.log(JSON.stringify(out, null, 2));
+util.thisContainerInfo((err, out) => {
+    if(err){
+        console.error(err.message);
+    }
+    else {
+        console.log(JSON.stringify(out, null, 2));
+    }
 });
