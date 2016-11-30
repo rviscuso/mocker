@@ -12,4 +12,4 @@ if(!url){
 }
 
 du.httpS(url)
-    .pipe(process.stdout)
+    .pipe(process.stdout);

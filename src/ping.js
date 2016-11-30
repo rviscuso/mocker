@@ -12,4 +12,4 @@ if(!hostName){
 }
 
 du.pingS(hostName)
-    .pipe(process.stdout)
+    .pipe(process.stdout);

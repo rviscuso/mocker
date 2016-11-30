@@ -21,18 +21,18 @@ app.get('/', (req, res) => {
         res.json(out);
     })
 
-})
+});
 
 app.post('ping', (req, res) => {
-    let hostName = req.body.hostName || req.body.hostname || req.body.host
+    let hostName = req.body.hostName || req.body.hostname || req.body.host;
     du.pingS(hostName)
         .pipe(res);
-})
+});
 
 app.post('http', (req, res) => {
-    let url = req.body.url || req.body.URL || req.body.Url
+    let url = req.body.url || req.body.URL || req.body.Url;
     du.httpS(url)
         .pipe(res);
-})
+});
 
 app.listen(serverPort, () => console.log('Server is listening at port ' + serverPort));

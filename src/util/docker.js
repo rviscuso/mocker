@@ -6,12 +6,12 @@ const exec = require('child_process').exec;
 const Docker = require('dockerode');
 const docker = new Docker();
 const spawn = require('child_process').spawn;
-const request = require('request')
+const request = require('request');
 
 module.exports = {
 
     thisContainerId: (callback) => {
-        exec('basename "$(head /proc/1/cgroup)"', (err, stdout, stderr) => {
+        exec('basename "$(head /proc/1/cgroup)"', (err, stdout) => {
             if (err) {
                 callback(err);
             }
@@ -56,4 +56,4 @@ module.exports = {
     httpS: (url) => {
         return request(url);
     }
-}
+};
