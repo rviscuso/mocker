@@ -6,12 +6,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const util = require('./util');
 const ip = require('ip');
-const _ = require('highland');
+const http = require('http');
 
-let serverPortsStr = process.argv[2] || '8080';
-let serverPorts = serverPortsStr.split(',');
+let serverPortStr = process.argv[2] || '8080';
+const serverPort = parseInt(serverPortStr);
 
 let app = express();
+const server = http.createServer(app);
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -61,9 +62,16 @@ app.post('/telnet', (req, res) => {
     })
 });
 
-_(serverPorts)
-    .each((port) => {
-        app.listen(port, () => {
-            console.log('Port: ' + port);
-        })
+process.on('SIGTERM', (signal) => {
+    console.log(`Received ${signal}`);
+    server.close((err) => {
+        if(err) {
+            console.error(err);
+            process.exit(1);
+        }
     });
+});
+
+server.listen(serverPort, () => {
+    console.log('Server listening on port: ' + serverPort);
+});
