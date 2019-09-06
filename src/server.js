@@ -9,6 +9,7 @@ const ip = require('ip');
 const http = require('http');
 
 let serverPortStr = process.argv[2] || '8080';
+let serverStartDelay = process.argv[3] || 0;
 const serverPort = parseInt(serverPortStr);
 
 let app = express();
@@ -72,6 +73,13 @@ process.on('SIGTERM', (signal) => {
     });
 });
 
-server.listen(serverPort, () => {
-    console.log('Server listening on port: ' + serverPort);
-});
+if(serverStartDelay) {
+    console.log(`Startup delay of ${serverStartDelay} ms`)
+}
+setTimeout(() => {
+    server.listen(serverPort, () => {
+        console.log('Server listening on port: ' + serverPort);
+    });
+}, serverStartDelay);
+
+

@@ -15,8 +15,12 @@ To start a mocker server:
 # default port 8080
 docker run --rm --name mocker8080 -v /var/run/docker.sock:/var/run/docker.sock mocker
 
-other ports
+# other ports
 docker run --rm --name mocker8888 -v /var/run/docker.sock:/var/run/docker.sock mocker node server 8888
+
+# with startup delay (10 seconds)
+docker run --rm --name mocker8888 -v /var/run/docker.sock:/var/run/docker.sock mocker node server 8888 10000
+
 ```
 
 To get information or test commands in a mocker server:
